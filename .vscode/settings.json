@@ -1,0 +1,9 @@
+{
+  "alias-skip.mappings": {
+    "@": "/src"
+  },
+  "path-intellisense.mappings": {
+    "@": "${workspaceRoot}/src"
+  },
+  // "editor.snippetSuggestions": "top"
+}
