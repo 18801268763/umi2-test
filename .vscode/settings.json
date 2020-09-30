@@ -1,9 +1,12 @@
 {
   "alias-skip.mappings": {
-    "@": "/src"
+    // "@": "/src"
   },
   "path-intellisense.mappings": {
-    "@": "${workspaceRoot}/src"
+    // "@": "${workspaceRoot}/src"
+  },
+  "jumpToAliasFile.alias": {
+    "@": "e:\\前端学习路线\\前端框架\\React\\UmiJS\\2.x\\umi2-test\\src"
   },
   // "editor.snippetSuggestions": "top"
 }
