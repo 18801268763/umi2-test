@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react'
 import { isObject } from '@/utils/test'
+import Test from '@/components/Test'
 
 export class index extends PureComponent {
   componentDidMount() {
@@ -9,7 +10,7 @@ export class index extends PureComponent {
   render() {
     return (
       <div>
-        test!
+        <Test/>
       </div>
     )
   }
