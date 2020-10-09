@@ -2,40 +2,37 @@
 // ref: https://umijs.org/config/
 export default {
   treeShaking: true,
-  hash:true,
-  // routes: [
-  //   {
-  //     path: '/',
-  //     component: '../layouts/index',
-  //     routes: [
-  //       { path: '/', component: '../pages/index' }
-  //     ]
-  //   }
-  // ],
-  chainWebpack: function (config, { webpack }) {
-    config.merge({
-      optimization: {
-        chunkIds: 'named',
-        minimize: true,
-        splitChunks: {
-          chunks: 'all',
-          minSize: 30000,
-          minChunks: 3,
-          automaticNameDelimiter: '.',
-          cacheGroups: {
-            vendor: {
-              name: 'vendors',
-              test({ resource }) {
-                return /[\\/]node_modules[\\/]/.test(resource);
-              },
-              priority: 10,
-            },
-          },
-        },
-      }
-    });
-  },
-  
+  hash: true,
+  // 配置 external
+  // externals: {
+  //   'react': 'window.React',
+  //   'react-dom': 'window.ReactDOM',
+  // },
+  history: 'hash',
+  // chainWebpack: function (config, { webpack }) {
+  //   config.merge({
+  //     optimization: {
+  //       chunkIds: 'named',
+  //       minimize: true,
+  //       splitChunks: {
+  //         chunks: 'all',
+  //         minSize: 30000,
+  //         minChunks: 3,
+  //         automaticNameDelimiter: '.',
+  //         cacheGroups: {
+  //           vendor: {
+  //             name: 'vendors',
+  //             test({ resource }) {
+  //               return /[\\/]node_modules[\\/]/.test(resource);
+  //             },
+  //             priority: 10,
+  //           },
+  //         },
+  //       },
+  //     }
+  //   });
+  // },
+
   devServer: {
     port: 10000,
     open: true,

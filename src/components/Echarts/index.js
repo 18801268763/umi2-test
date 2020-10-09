@@ -1,15 +1,23 @@
 import { PureComponent } from 'react';
 import ReactEcharts from 'echarts-for-react';
 import styles from './index.less';
+import PropTypes from 'prop-types'
 
 export default class Echarts extends PureComponent {
+    static propTypes = {
+        // echarts点击事件的回调
+        onChartClick: PropTypes.func,
+    }
+
     render() {
-        const { option, confirmLoading, style } = this.props;
+        const { option, confirmLoading, style, onChartClick } = this.props;
 
         // Echart
         const onChartLegendselectchanged = (param, echart) => { };
 
-        const onChartClick = (param, echart) => { };
+        // const onChartClick = (param, echart) => {
+        //     console.log(param);
+        // };
 
         let onEvents = {
             click: onChartClick,
@@ -28,11 +36,11 @@ export default class Echarts extends PureComponent {
         }
 
         return (
-            <div>
+            <div style={{ height: '100%' }}>
                 {
                     // 空数据时，展示空白的提示
                     isEmpty ? (
-                        <p className={styles.echartEmpty} style={{...style}}>{"暂无数据"}</p>
+                        <p className={styles.echartEmpty} style={{ ...style }}>{"暂无数据"}</p>
                     ) : (
                             // 有数据时画图
                             <ReactEcharts

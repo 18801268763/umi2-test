@@ -1,24 +1,146 @@
 import React, { PureComponent } from 'react'
+import 'echarts/map/js/china'
 import Echarts from '@/components/Echarts'
+import styles from './index.less'
 
-export default class Map extends PureComponent {
+export default class EchartsMap extends PureComponent {
+    state = {
+        option: {
+            tooltip: {
+                show: true,
+                formatter: function (params) {
+                    if (params.data) {
+                        return params.name + '<br/>人数：' + params.data.value[0] + '<br/>设备：' + params.data.value[1]
+                    }
+                }
+            },
+            visualMap: {
+                type: 'continuous',
+                orient: 'horizontal', //控制条横向
+                bottom: 20,
+                min: 0,
+                max: 10000,
+                inRange: {
+                    color: ['#ffd200', '#ff0000']
+                },
+                text: ['高', '低'],
+                // calculable: true
+            },
+            series: [
+                {
+                    type: 'map',
+                    mapType: 'china',
+                    // roam:true,
+                    label: {
+                        show: true
+                    },
+                    // 区域颜色
+                    itemStyle: {
+                        areaColor: '#ffff00'
+                    },
+                    //鼠标聚焦时的区域颜色
+                    emphasis: {
+                        itemStyle: {
+                            areaColor: '#dede00'
+                        }
+                    },
+                    //虚拟数据
+                    data: [{
+                        name: '北京',
+                        value: [1000, 5000]
+                    }, {
+                        name: '广东',
+                        value: [200, 300]
+                    }],
+                }
+            ],
+        }
+    }
+
+    onChartClick = (params) => {
+        //定义全国省份的数组
+        const cityArr = [
+            ['上海', '河北', '山西', '内蒙古', '辽宁', '吉林', '黑龙江', '江苏', '浙江', '安徽', '福建', '江西', '山东', '河南', '湖北', '湖南', '广东', '广西', '海南', '四川', '贵州', '云南', '西藏', '陕西', '甘肃', '青海', '宁夏', '新疆', '北京', '天津', '重庆', '香港', '澳门', '台湾'],
+            ['shanghai', 'hebei', 'shanxi', 'neimenggu', 'liaoning', 'jilin', 'heilongjiang', 'jiangsu', 'zhejiang', 'anhui', 'fujian', 'jiangxi', 'shandong', 'henan', 'hubei', 'hunan', 'guangdong', 'guangxi', 'hainan', 'sichuan', 'guizhou', 'yunnan', 'xizang', 'shanxi1', 'gansu', 'qinghai', 'ningxia', 'xinjiang', 'beijing', 'tianjin', 'chongqing', 'xianggang', 'aomen', 'taiwan']
+        ];
+        console.log(params)
+        // 城市中文名
+        const cityName = params.name;
+        // 查找是否有对s应城市有则加载城市
+        for (let i = 0, len = cityArr[0].length; i < len; i++) {
+            if (cityName === cityArr[0][i]) {
+                // 获取得城市拼音
+                this.showCity(cityArr[0][i], cityArr[1][i]);
+                return;
+            }
+        }
+        //没有找到对应城市的话，那么返回到全国地图 
+        // option.series[0].mapType = 'china';
+        // if (params.name === '新疆') {
+
+        // }
+    }
+
+    showCity = (zhName, pyName) => {
+        console.log(zhName, pyName);
+        // import('react').then(module => {
+        //     console.log(module);
+        // })
+        // const _this = this;
+        // console.log(this);
+        import('echarts/map/js/province/' + pyName + '.js').then(() => {
+            const { option } = this.state;
+            // console.log(this.state.option);
+            // 设定中文省份名才能显示相关省份，之后想要设置什么数据，直接设置到option这里就可以了
+            // this.state.option.series[0].mapType = zhName;
+
+            const newOption = { ...option };
+            newOption.series[0].mapType = zhName;
+            this.setState({ option: newOption });
+
+            // 深拷贝，另建option以免丢失原始option数据
+            // var cityOption = JSON.parse(JSON.stringify(this.option));
+            // // 模拟虚拟数据
+            // if (zhName === '广东') {
+            //     cityOption.series[0].data = [{
+            //         name: '梅州市',
+            //         value: [100, 100]
+            //     }, {
+            //         name: '深圳市',
+            //         value: [100, 200]
+            //     }]
+            // } else if (zhName === '北京') {
+            //     cityOption.series[0].data = [{
+            //         name: '海淀区',
+            //         value: [500, 1000]
+            //     }, {
+            //         name: '朝阳区',
+            //         value: [500, 4000]
+            //     }]
+            // }
+
+            // this.setState({ option: cityOption });
+        });
+    }
+
+    backMap = () => {
+        const { option } = this.state;
+        const newOption = { ...option };
+        newOption.series[0].mapType = 'china';
+        this.setState({ option: newOption });
+    }
+
     render() {
-        const option = {
-            xAxis: {
-                type: 'category',
-                data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
-            },
-            yAxis: {
-                type: 'value'
-            },
-            series: [{
-                data: [820, 932, 901, 934, 1290, 1330, 1320],
-                type: 'line'
-            }]
-        };
+        const { option } = this.state;
+
         return (
-            <div>
-                <Echarts option={option} />
+            <div className={styles.echartsMapContainer}>
+                <button onClick={this.backMap}>返回</button>
+                <Echarts
+                    option={option}
+                    style={{ height: '100vh' }}
+                    onChartClick={this.onChartClick}
+                />
             </div>
         )
     }
