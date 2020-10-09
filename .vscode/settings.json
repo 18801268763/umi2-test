@@ -1,10 +1,10 @@
 {
-  // "alias-skip.mappings": {
-  //   "@": "/src"
-  // },
-  // "path-intellisense.mappings": {
-  //   "@": "${workspaceRoot}/src"
-  // },
+  "alias-skip.mappings": {
+    "@": "/src"
+  },
+  "path-intellisense.mappings": {
+    "@": "${workspaceRoot}/src"
+  },
   "jumpToAliasFile.alias": {
     "@": "e:\\前端学习路线\\前端框架\\React\\UmiJS\\2.x\\umi2-test\\src"
   },
