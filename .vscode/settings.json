@@ -6,7 +6,7 @@
     "@": "${workspaceRoot}/src"
   },
   "jumpToAliasFile.alias": {
-    "@": "e:\\前端学习路线\\前端框架\\React\\UmiJS\\2.x\\umi2-test\\src"
+    "@": "e:\\learn-frontend\\frontend-framework\\React\\UmiJS\\2.x\\umi2-test\\src"
   },
   // "editor.snippetSuggestions": "top"
 }
